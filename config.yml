@@ -1,5 +1,4 @@
-baseURL: "https://artyeth06.github.io"
-title: Malsius
+title: Arty06
 theme: PaperMod
 
 paginate: 5
@@ -18,8 +17,8 @@ outputs:
 
 menu:
   main:
-    - name: Categories
-      url: categories/
+    - name: Cheat sheet
+      url: tags/cheat-sheet
       weight: 1
     - name: Tags
       url: tags/
@@ -33,7 +32,7 @@ menu:
 
 params:
   env: production
-  description: "Blog about cybersecurity, CTF and IT."
+  description: "Blog about cybersecurity, CTF."
   keywords: [blog, cybersecurity, ctf, hacking, it, tech]
   defaultTheme: dark
   disableThemeToggle: true
@@ -45,28 +44,24 @@ params:
     - posts
 
   profileMode:
-    enabled: false
-    title: Malsius
+    enabled: true
+    title: Arty06
     imageUrl: "avatar.png"
-    imageTitle: "Malsius"
+    imageTitle: "Arty06"
     imageWidth: 120
     imageHeight: 120
-    subtitle: "Cybersecurity student | Tech enthusiast"
+    subtitle: "HighSchool student | Cybersecurity enthusiast"
 
   socialIcons:
-    - name: twitter
-      url: "https://twitter.com/0xMalsius"
+    - name: codepen
+      url: "https://codepen.io/ArtyETH06"
     - name: github
-      url: "https://github.com/Malsius"
-    - name: tryhackme
-      url: "https://tryhackme.com/p/Malsius"
-    - name: hackthebox
-      url: "https://app.hackthebox.com/users/672972"
+      url: "https://github.com/ArtyETH06"
     - name: rootme
-      url: "https://www.root-me.org/Malsius"
+      url: "https://www.root-me.org/Arty06"
 
   label:
-    text: "Malsius"
+    text: "Arty06"
     icon: "avatar.png"
     iconHeight: 30
   
