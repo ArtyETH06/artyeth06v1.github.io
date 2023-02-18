@@ -1,5 +1,6 @@
 title: Arty06
 theme: PaperMod
+baseURL: "https://artyeth06.github.io/"
 
 paginate: 5
 enableInlineShortcodes: true
