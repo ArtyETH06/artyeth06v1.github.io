@@ -19,7 +19,7 @@ outputs:
 menu:
   main:
     - name: Cheat sheet
-      url: tags/cheat-sheet
+      url: categories/cheat-sheet
       weight: 1
     - name: Tags
       url: tags/
