@@ -60,6 +60,8 @@ params:
       url: "https://github.com/ArtyETH06"
     - name: rootme
       url: "https://www.root-me.org/Arty06"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/arthur-raillon-b95b21256/"
 
   label:
     text: "Arty06"
