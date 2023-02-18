@@ -21,8 +21,8 @@ menu:
     - name: Cheat sheet
       url: categories/cheat-sheet
       weight: 1
-    - name: Tags
-      url: tags/
+    - name: Writeups
+      url: categories/writeups
       weight: 2
     - name: Search
       url: search/
