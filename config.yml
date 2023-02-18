@@ -28,7 +28,7 @@ menu:
       url: search/
       weight: 3
     - name: About
-      url: tags/about/
+      url: about/
       weight: 4
 
 params:
