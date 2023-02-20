@@ -54,8 +54,6 @@ params:
     subtitle: "HighSchool student | Cybersecurity enthusiast"
 
   socialIcons:
-    - name: codepen
-      url: "https://codepen.io/ArtyETH06"
     - name: github
       url: "https://github.com/ArtyETH06"
     - name: rootme
