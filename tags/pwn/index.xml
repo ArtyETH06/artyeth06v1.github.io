@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>pwn on Arty06</title>
+    <link>https://artyeth06.github.io/tags/pwn/</link>
+    <description>Recent content in pwn on Arty06</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 30 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://artyeth06.github.io/tags/pwn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>uid</title>
+      <link>https://artyeth06.github.io/uid/</link>
+      <pubDate>Sun, 30 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/uid/</guid>
+      <description>Writeup du challenge uid issu du CTF FCSC 2023</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>La gazette de Windows | Arty06</title>
+<meta name="keywords" content="FCSC 2023, Forensic">
+<meta name="description" content="Writeup du challenge La gazette de Windows issu du CTF FCSC 2023">
+<meta name="author" content="">
+<link rel="canonical" href="https://artyeth06.github.io/La_gazette_de_Windows/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://artyeth06.github.io/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://artyeth06.github.io/favicons/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://artyeth06.github.io/favicons/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://artyeth06.github.io/favicons/apple-touch-icon.png">
+<link rel="mask-icon" href="https://artyeth06.github.io/favicons/favicon.ico">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><style>
+    @media screen and (min-width: 769px) {
+
+         
+        .post-content input[type="checkbox"]:checked~label>img {
+            transform: scale(1.6);
+            cursor: zoom-out;
+            position: relative;
+            z-index: 999;
+        }
+
+        .post-content img.zoomCheck {
+            transition: transform 0.15s ease;
+            z-index: 999;
+            cursor: zoom-in;
+        }
+    }
+</style>
+<meta property="og:title" content="La gazette de Windows" />
+<meta property="og:description" content="Writeup du challenge La gazette de Windows issu du CTF FCSC 2023" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://artyeth06.github.io/La_gazette_de_Windows/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-04-30T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="La gazette de Windows"/>
+<meta name="twitter:description" content="Writeup du challenge La gazette de Windows issu du CTF FCSC 2023"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://artyeth06.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "La gazette de Windows",
+      "item": "https://artyeth06.github.io/La_gazette_de_Windows/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "La gazette de Windows",
+  "name": "La gazette de Windows",
+  "description": "Writeup du challenge La gazette de Windows issu du CTF FCSC 2023",
+  "keywords": [
+    "FCSC 2023", "Forensic"
+  ],
+  "articleBody": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Description: Il semblerait qu’un utilisateur exécute des scripts Powershell suspects sur sa machine. Heureusement cette machine est journalisée et nous avons pu récupérer le journal d’évènements Powershell. Retrouvez ce qui a été envoyé à l’attaquant.\nType: Forensics\nLevel: Intro ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nIdentification du problème Le fichier qui nous est donné est un log d’événements sur une machine windows:\nEn regardant ce log de plus près (5e) nous pouvons y voir pas mal de chose,intéressantes:\nBon ce que l’on comprends en gros c’est que une personne esasaie de se connecter à la machine,ouvre un shell et essaie de s’envoyer des données,les données envoyées sont celles de: 0x46, 0x42, 0x51, 0x40, 0x7F, 0x3C, 0x3E, 0x64, 0x31, 0x31, 0x6E, 0x32, 0x34, 0x68, 0x3B, 0x6E, 0x25, 0x25, 0x24, 0x77, 0x77, 0x73, 0x20, 0x75, 0x29, 0x7C, 0x7B, 0x2D, 0x79, 0x29, 0x29, 0x29, 0x10, 0x13, 0x1B, 0x14, 0x16, 0x40, 0x47, 0x16, 0x4B, 0x4C, 0x13, 0x4A, 0x48, 0x1A, 0x1C, 0x19, 0x2, 0x5, 0x4, 0x7, 0x2, 0x5, 0x2, 0x0, 0xD, 0xA, 0x59, 0xF, 0x5A, 0xA, 0x7, 0x5D, 0x73, 0x20, 0x20, 0x27, 0x77, 0x38, 0x4B, 0x4D\nNous pouvons remarque que ce sont des données en Hexadécimal\nSolution Nous pouvons créer un script python permettant de reconstituer les données envoyées à l’attaquant:\nhex_list = [0x46, 0x42, 0x51, 0x40, 0x7F, 0x3C, 0x3E, 0x64, 0x31, 0x31, 0x6E, 0x32, 0x34, 0x68, 0x3B, 0x6E, 0x25, 0x25, 0x24, 0x77, 0x77, 0x73, 0x20, 0x75, 0x29, 0x7C, 0x7B, 0x2D, 0x79, 0x29, 0x29, 0x29, 0x10, 0x13, 0x1B, 0x14, 0x16, 0x40, 0x47, 0x16, 0x4B, 0x4C, 0x13, 0x4A, 0x48, 0x1A, 0x1C, 0x19, 0x2, 0x5, 0x4, 0x7, 0x2, 0x5, 0x2, 0x0, 0xD, 0xA, 0x59, 0xF, 0x5A, 0xA, 0x7, 0x5D, 0x73, 0x20, 0x20, 0x27, 0x77, 0x38, 0x4B, 0x4D]decoded_str = ''.join(chr(x ^ i) for i, x in enumerate(hex_list))print(decoded_str) Et nous obtenons le flag !\nConclusion Les logs window peuvent être très important ! Pourquoi envoyer un flag ?\n",
+  "wordCount" : "305",
+  "inLanguage": "en",
+  "datePublished": "2023-04-30T00:00:00Z",
+  "dateModified": "2023-04-30T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://artyeth06.github.io/La_gazette_de_Windows/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Arty06",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://artyeth06.github.io/favicons/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://artyeth06.github.io/" accesskey="h" title="Arty06 (Alt + H)">
+                <img src="https://artyeth06.github.io/avatar.png" alt="" aria-label="logo"
+                    height="30">Arty06</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://artyeth06.github.io/categories/cheat-sheet" title="Cheat sheet">
+                    <span>Cheat sheet</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://artyeth06.github.io/categories/writeups" title="Writeups">
+                    <span>Writeups</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://artyeth06.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://artyeth06.github.io/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      La gazette de Windows
+    </h1>
+    <div class="post-meta"><span title='2023-04-30 00:00:00 +0000 UTC'>April 30, 2023</span>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#identification-du-probl%c3%a8me" aria-label="Identification du problème">Identification du problème</a></li>
+                <li>
+                    <a href="#solution" aria-label="Solution">Solution</a></li>
+                <li>
+                    <a href="#conclusion" aria-label="Conclusion">Conclusion</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><strong>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</strong> <strong>Description:</strong> Il semblerait qu’un utilisateur exécute des scripts Powershell suspects sur sa machine. Heureusement cette machine est journalisée et nous avons pu récupérer le journal d’évènements Powershell. Retrouvez ce qui a été envoyé à l’attaquant.</p>
+<p><strong>Type:</strong> Forensics</p>
+<p><strong>Level:</strong> Intro <strong>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</strong></p>
+<h2 id="identification-du-problème">Identification du problème<a hidden class="anchor" aria-hidden="true" href="#identification-du-problème">#</a></h2>
+<p>Le fichier qui nous est donné est un <em>log</em> d’événements sur une machine windows:</p>
+<p>
+
+<input type="checkbox" id="zoomCheck-8cd99" hidden>
+<label for="zoomCheck-8cd99">
+    <img class="zoomCheck" loading="lazy" decoding="async" src="/images/edd9bd24-3a61-45de-8f0f-c6ead45e085d.png#center" alt=""  />
+</label></p>
+<p>En regardant ce log de plus près (5e) nous pouvons y voir pas mal de chose,intéressantes:</p>
+<p>
+
+<input type="checkbox" id="zoomCheck-14a91" hidden>
+<label for="zoomCheck-14a91">
+    <img class="zoomCheck" loading="lazy" decoding="async" src="/images/def6d67e-bb95-4459-8115-f582bb1c02b4.png#center" alt=""  />
+</label></p>
+<p>Bon ce que l’on comprends en gros c’est que une personne esasaie de se <em>connecter</em> à la machine,ouvre un <em>shell</em> et essaie de <em>s’envoyer des données</em>,les données envoyées sont celles de: <code>0x46, 0x42, 0x51, 0x40, 0x7F, 0x3C, 0x3E, 0x64, 0x31, 0x31, 0x6E, 0x32, 0x34, 0x68, 0x3B, 0x6E, 0x25, 0x25, 0x24, 0x77, 0x77, 0x73, 0x20, 0x75, 0x29, 0x7C, 0x7B, 0x2D, 0x79, 0x29, 0x29, 0x29, 0x10, 0x13, 0x1B, 0x14, 0x16, 0x40, 0x47, 0x16, 0x4B, 0x4C, 0x13, 0x4A, 0x48, 0x1A, 0x1C, 0x19, 0x2, 0x5, 0x4, 0x7, 0x2, 0x5, 0x2, 0x0, 0xD, 0xA, 0x59, 0xF, 0x5A, 0xA, 0x7, 0x5D, 0x73, 0x20, 0x20, 0x27, 0x77, 0x38, 0x4B, 0x4D</code></p>
+<p>Nous pouvons remarque que ce sont des données en <strong>Hexadécimal</strong></p>
+<h2 id="solution">Solution<a hidden class="anchor" aria-hidden="true" href="#solution">#</a></h2>
+<p>Nous pouvons créer un script python permettant de reconstituer les données envoyées à l’attaquant:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">hex_list</span> <span class="o">=</span> <span class="p">[</span><span class="mh">0x46</span><span class="p">,</span> <span class="mh">0x42</span><span class="p">,</span> <span class="mh">0x51</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x7F</span><span class="p">,</span> <span class="mh">0x3C</span><span class="p">,</span> <span class="mh">0x3E</span><span class="p">,</span> <span class="mh">0x64</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0x6E</span><span class="p">,</span> <span class="mh">0x32</span><span class="p">,</span> <span class="mh">0x34</span><span class="p">,</span> <span class="mh">0x68</span><span class="p">,</span> <span class="mh">0x3B</span><span class="p">,</span> <span class="mh">0x6E</span><span class="p">,</span> <span class="mh">0x25</span><span class="p">,</span> <span class="mh">0x25</span><span class="p">,</span> <span class="mh">0x24</span><span class="p">,</span> <span class="mh">0x77</span><span class="p">,</span> <span class="mh">0x77</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x75</span><span class="p">,</span> <span class="mh">0x29</span><span class="p">,</span> <span class="mh">0x7C</span><span class="p">,</span> <span class="mh">0x7B</span><span class="p">,</span> <span class="mh">0x2D</span><span class="p">,</span> <span class="mh">0x79</span><span class="p">,</span> <span class="mh">0x29</span><span class="p">,</span> <span class="mh">0x29</span><span class="p">,</span> <span class="mh">0x29</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">,</span> <span class="mh">0x13</span><span class="p">,</span> <span class="mh">0x1B</span><span class="p">,</span> <span class="mh">0x14</span><span class="p">,</span> <span class="mh">0x16</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x47</span><span class="p">,</span> <span class="mh">0x16</span><span class="p">,</span> <span class="mh">0x4B</span><span class="p">,</span> <span class="mh">0x4C</span><span class="p">,</span> <span class="mh">0x13</span><span class="p">,</span> <span class="mh">0x4A</span><span class="p">,</span> <span class="mh">0x48</span><span class="p">,</span> <span class="mh">0x1A</span><span class="p">,</span> <span class="mh">0x1C</span><span class="p">,</span> <span class="mh">0x19</span><span class="p">,</span> <span class="mh">0x2</span><span class="p">,</span> <span class="mh">0x5</span><span class="p">,</span> <span class="mh">0x4</span><span class="p">,</span> <span class="mh">0x7</span><span class="p">,</span> <span class="mh">0x2</span><span class="p">,</span> <span class="mh">0x5</span><span class="p">,</span> <span class="mh">0x2</span><span class="p">,</span> <span class="mh">0x0</span><span class="p">,</span> <span class="mh">0xD</span><span class="p">,</span> <span class="mh">0xA</span><span class="p">,</span> <span class="mh">0x59</span><span class="p">,</span> <span class="mh">0xF</span><span class="p">,</span> <span class="mh">0x5A</span><span class="p">,</span> <span class="mh">0xA</span><span class="p">,</span> <span class="mh">0x7</span><span class="p">,</span> <span class="mh">0x5D</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x27</span><span class="p">,</span> <span class="mh">0x77</span><span class="p">,</span> <span class="mh">0x38</span><span class="p">,</span> <span class="mh">0x4B</span><span class="p">,</span> <span class="mh">0x4D</span><span class="p">]</span><span class="n">decoded_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">x</span> <span class="o">^</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hex_list</span><span class="p">))</span><span class="nb">print</span><span class="p">(</span><span class="n">decoded_str</span><span class="p">)</span>
+</span></span></code></pre></div><p>Et nous obtenons le flag !</p>
+<p>
+
+<input type="checkbox" id="zoomCheck-77b4a" hidden>
+<label for="zoomCheck-77b4a">
+    <img class="zoomCheck" loading="lazy" decoding="async" src="/images/1677d002-78b0-47b8-bee6-0c1c808fa19b.png#center" alt=""  />
+</label></p>
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>Les logs window peuvent être très important ! Pourquoi envoyer un flag ?</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://artyeth06.github.io/tags/fcsc-2023/">FCSC 2023</a></li>
+      <li><a href="https://artyeth06.github.io/tags/forensic/">Forensic</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 Arty06</span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

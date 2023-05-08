@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>FCSC 2023 on Arty06</title>
+    <link>https://artyeth06.github.io/tags/fcsc-2023/</link>
+    <description>Recent content in FCSC 2023 on Arty06</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 30 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://artyeth06.github.io/tags/fcsc-2023/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Aaarg</title>
+      <link>https://artyeth06.github.io/aaarg/</link>
+      <pubDate>Sun, 30 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/aaarg/</guid>
+      <description>Writeup du challenge aaarg issu du CTF FCSC 2023</description>
+    </item>
+    
+    <item>
+      <title>La gazette de Windows</title>
+      <link>https://artyeth06.github.io/La_gazette_de_Windows/</link>
+      <pubDate>Sun, 30 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/La_gazette_de_Windows/</guid>
+      <description>Writeup du challenge La gazette de Windows issu du CTF FCSC 2023</description>
+    </item>
+    
+    <item>
+      <title>Ransomémoire 0-3</title>
+      <link>https://artyeth06.github.io/Ransom%C3%A9moire_0-3/</link>
+      <pubDate>Sun, 30 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/Ransom%C3%A9moire_0-3/</guid>
+      <description>Writeup du challenge ransomémoire 0/3 issu du CTF FCSC 2023</description>
+    </item>
+    
+    <item>
+      <title>ROT13</title>
+      <link>https://artyeth06.github.io/rot13/</link>
+      <pubDate>Sun, 30 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/rot13/</guid>
+      <description>Writeup du challenge rot13 issu du CTF FCSC 2023</description>
+    </item>
+    
+    <item>
+      <title>T&#39;es lent</title>
+      <link>https://artyeth06.github.io/t_es_lent/</link>
+      <pubDate>Sun, 30 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/t_es_lent/</guid>
+      <description>Writeup du challenge T’es lent issu du CTF FCSC 2023</description>
+    </item>
+    
+    <item>
+      <title>Tri sélectif</title>
+      <link>https://artyeth06.github.io/tri_selectif/</link>
+      <pubDate>Sun, 30 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/tri_selectif/</guid>
+      <description>Writeup du challenge Tri sélectif issu du CTF FCSC 2023</description>
+    </item>
+    
+    <item>
+      <title>uid</title>
+      <link>https://artyeth06.github.io/uid/</link>
+      <pubDate>Sun, 30 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/uid/</guid>
+      <description>Writeup du challenge uid issu du CTF FCSC 2023</description>
+    </item>
+    
+  </channel>
+</rss>

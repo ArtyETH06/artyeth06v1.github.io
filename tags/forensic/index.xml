@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Forensic on Arty06</title>
+    <link>https://artyeth06.github.io/tags/forensic/</link>
+    <description>Recent content in Forensic on Arty06</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 30 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://artyeth06.github.io/tags/forensic/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>La gazette de Windows</title>
+      <link>https://artyeth06.github.io/La_gazette_de_Windows/</link>
+      <pubDate>Sun, 30 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/La_gazette_de_Windows/</guid>
+      <description>Writeup du challenge La gazette de Windows issu du CTF FCSC 2023</description>
+    </item>
+    
+    <item>
+      <title>Ransomémoire 0-3</title>
+      <link>https://artyeth06.github.io/Ransom%C3%A9moire_0-3/</link>
+      <pubDate>Sun, 30 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/Ransom%C3%A9moire_0-3/</guid>
+      <description>Writeup du challenge ransomémoire 0/3 issu du CTF FCSC 2023</description>
+    </item>
+    
+    <item>
+      <title>USB-transfert</title>
+      <link>https://artyeth06.github.io/USB_transfert/</link>
+      <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://artyeth06.github.io/USB_transfert/</guid>
+      <description>Writeup du challenge Guess USB-Transfert issu du CTF HDFR x Kraken</description>
+    </item>
+    
+  </channel>
+</rss>

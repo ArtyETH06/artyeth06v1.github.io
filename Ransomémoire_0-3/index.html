@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Ransomémoire 0-3 | Arty06</title>
+<meta name="keywords" content="FCSC 2023, Forensic">
+<meta name="description" content="Writeup du challenge ransomémoire 0/3 issu du CTF FCSC 2023">
+<meta name="author" content="">
+<link rel="canonical" href="https://artyeth06.github.io/Ransom%C3%A9moire_0-3/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://artyeth06.github.io/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://artyeth06.github.io/favicons/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://artyeth06.github.io/favicons/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://artyeth06.github.io/favicons/apple-touch-icon.png">
+<link rel="mask-icon" href="https://artyeth06.github.io/favicons/favicon.ico">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><style>
+    @media screen and (min-width: 769px) {
+
+         
+        .post-content input[type="checkbox"]:checked~label>img {
+            transform: scale(1.6);
+            cursor: zoom-out;
+            position: relative;
+            z-index: 999;
+        }
+
+        .post-content img.zoomCheck {
+            transition: transform 0.15s ease;
+            z-index: 999;
+            cursor: zoom-in;
+        }
+    }
+</style>
+<meta property="og:title" content="Ransomémoire 0-3" />
+<meta property="og:description" content="Writeup du challenge ransomémoire 0/3 issu du CTF FCSC 2023" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://artyeth06.github.io/Ransom%C3%A9moire_0-3/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-04-30T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ransomémoire 0-3"/>
+<meta name="twitter:description" content="Writeup du challenge ransomémoire 0/3 issu du CTF FCSC 2023"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://artyeth06.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Ransomémoire 0-3",
+      "item": "https://artyeth06.github.io/Ransom%C3%A9moire_0-3/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Ransomémoire 0-3",
+  "name": "Ransomémoire 0-3",
+  "description": "Writeup du challenge ransomémoire 0/3 issu du CTF FCSC 2023",
+  "keywords": [
+    "FCSC 2023", "Forensic"
+  ],
+  "articleBody": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Description: Vous vous préparez à analyser une capture mémoire et vous notez quelques informations sur la machine avant de plonger dans l’analyse : - nom d’utilisateur, - nom de la machine, - navigateur utilisé. Le flag est au format FCSC{",
+  "wordCount" : "280",
+  "inLanguage": "en",
+  "datePublished": "2023-04-30T00:00:00Z",
+  "dateModified": "2023-04-30T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://artyeth06.github.io/Ransom%C3%A9moire_0-3/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Arty06",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://artyeth06.github.io/favicons/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://artyeth06.github.io/" accesskey="h" title="Arty06 (Alt + H)">
+                <img src="https://artyeth06.github.io/avatar.png" alt="" aria-label="logo"
+                    height="30">Arty06</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://artyeth06.github.io/categories/cheat-sheet" title="Cheat sheet">
+                    <span>Cheat sheet</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://artyeth06.github.io/categories/writeups" title="Writeups">
+                    <span>Writeups</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://artyeth06.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://artyeth06.github.io/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Ransomémoire 0-3
+    </h1>
+    <div class="post-meta"><span title='2023-04-30 00:00:00 +0000 UTC'>April 30, 2023</span>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#solution" aria-label="Solution">Solution</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><strong>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</strong> <strong>Description:</strong> Vous vous préparez à analyser une capture mémoire et vous notez quelques informations sur la machine avant de plonger dans l’analyse : - nom d’utilisateur, - nom de la machine, - navigateur utilisé. Le flag est au format <code>FCSC{&lt;nom d'utilisateur&gt;:&lt;nom de la machine&gt;:&lt;nom du navigateur&gt;}</code> où :</p>
+<ul>
+<li>
+<p><code>&lt;nom d'utilisateur&gt;</code> est le nom de l’utilisateur qui utilise la machine,</p>
+</li>
+<li>
+<p><code>&lt;nom de la machine&gt;</code> est le nom de la machine analysée et</p>
+</li>
+<li>
+<p><code>&lt;nom du navigateur&gt;</code> est le nom du navigateur en cours d’exécution. Par exemple : <code>FCSC{toto:Ordinateur-de-jojo:Firefox}</code>. <strong>Attention</strong> : pour cette épreuve, vous n’avez que 10 tentatives de flag.`</p>
+</li>
+</ul>
+<p><strong>Type:</strong> forensics</p>
+<p><strong>Level:</strong> (Facile I guess ?) <strong>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</strong> ## Identification du problème:</p>
+<p>Nous avons un dump mémoire que nous devons anlyser en y retrouvant 3 choses:</p>
+<ul>
+<li><code>&lt;nom d'utilisateur&gt;</code> est le nom de l’utilisateur qui utilise la machine</li>
+</ul>
+<p>, - <code>&lt;nom de la machine&gt;</code> est le nom de la machine analysée</p>
+<ul>
+<li><code>&lt;nom du navigateur&gt;</code> est le nom du navigateur en cours d’exécution.</li>
+</ul>
+<p>Pour analyser ce dump mémoire,nous pouvons utiliser <strong>Volatility3</strong> qui est un outil permettant d’analyser les dumps mémoire</p>
+<h2 id="solution">Solution<a hidden class="anchor" aria-hidden="true" href="#solution">#</a></h2>
+<p>Il y a enormément de possibilités,il faut donc trouver une commande nous renseignant sur la session en cours,pour y voir les processus en cours,le nom d’utilisateur et celui de la machine,et pour cela,nous avons la commande: <code>windows.sessions.Sessions</code> permettant de lister les processus de session en cours</p>
+<p>
+
+<input type="checkbox" id="zoomCheck-2ba89" hidden>
+<label for="zoomCheck-2ba89">
+    <img class="zoomCheck" loading="lazy" decoding="async" src="/images/9fa7ee9e-abde-4455-a01b-b9d602345b36.png#center" alt=""  />
+</label></p>
+<p>Et en faisant la commande: <code>python vol.py -f fcsc.dmp windows.sessions.Sessions</code> Nous pouvons y voir les informations qui nous intéressent !</p>
+<p>
+
+<input type="checkbox" id="zoomCheck-9c14b" hidden>
+<label for="zoomCheck-9c14b">
+    <img class="zoomCheck" loading="lazy" decoding="async" src="/images/9ff7f532-89f1-45bf-8fcd-d491af17592a.png#center" alt=""  />
+</label></p>
+<ul>
+<li>
+<p>Navigateur : <em>Brave</em></p>
+</li>
+<li>
+<p>Machine: <em>DESKTOP-PI234GP</em></p>
+</li>
+<li>
+<p>Utilisateur: <em>Admin</em></p>
+</li>
+</ul>
+<p>⚠️ Au début j’étais confus,mais les sessions administrateur de base ne sont pas <em>Admin</em>, mais <code>Administrateur</code> et en anglais: <code>Administrator</code></p>
+<p>Nous avons juste à format pour le flag !</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://artyeth06.github.io/tags/fcsc-2023/">FCSC 2023</a></li>
+      <li><a href="https://artyeth06.github.io/tags/forensic/">Forensic</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 Arty06</span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
